@@ -1,0 +1,50 @@
+body {
+    padding: 5px;
+    margin: 0;
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 16px;
+}
+
+button.Addzi {
+    margin-left: 5px;
+    margin-bottom: 5px;
+    background-color: darkblue;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+button.zilistbutton {
+    display: inline-block;
+    font-size: 20px;
+    margin: 10px;
+    font-weight: bold;
+    color: rgb(23, 119, 23);
+}
+
+#kanji {
+    font-size: 40px;
+    margin-left: 40px;
+}
+span.tm {
+    color: red;
+    font-weight: bold;
+}
+table,
+tr,
+td {
+    border: 1px solid;
+}
+
+table {
+    border-collapse: collapse;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+td {
+    padding-left: 4px;
+    padding-right: 4px;
+    text-align: center;
+    font-size: 16px;
+}

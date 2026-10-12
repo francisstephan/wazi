@@ -1,0 +1,93 @@
+use crate::data;
+
+#[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
+pub struct Zi {
+    pub strokes: i64,
+    pub pinyin_ton: &'static str,
+    pub unicode: &'static str,
+    pub hanzi: char,
+    pub sens: &'static str,
+}
+
+pub fn pylist(pinyin: &str) -> Vec<Zi> {
+    let last_char = pinyin.chars().last().unwrap();
+    let cond = matches!(last_char, '0'..='4');
+
+    let mut vec = Vec::<Zi>::new();
+    let n = data::ZIDIAN.len();
+    let mut i = 0; // cannont use an iterator with data::ZIDIAN
+    // shows error: "ZIDIAN is not an iterator
+    // required for ZIDIAN to implement IntoIterator"
+
+    while i < n {
+        let dbzi = &data::ZIDIAN[i];
+        let dbpt = dbzi.pinyin_ton;
+        let compare = if cond { dbpt } else { &dbpt[0..dbpt.len() - 1] };
+        if compare == pinyin {
+            let unic = dbzi.unicode;
+            let unicodestr = u32::from_str_radix(unic, 16).unwrap();
+
+            let zi = Zi {
+                pinyin_ton: dbzi.pinyin_ton,
+                unicode: unic,
+                hanzi: char::from_u32(unicodestr).unwrap(),
+                sens: dbzi.sens,
+                strokes: dbzi.strokes,
+            };
+            vec.push(zi);
+        }
+        i += 1;
+    }
+    vec.sort(); // https://rust-lang-nursery.github.io/rust-cookbook/algorithms/sorting.html
+    vec
+}
+
+pub fn getcandidatelist(chain: &str) -> String {
+    let veczi = pylist(chain);
+    let mut retour = String::new();
+    if veczi.len() == 0 {
+        retour
+    } else {
+        let mut curstrokes: i64 = 0;
+        for zi in veczi {
+            let strokes = zi.strokes;
+            if strokes > curstrokes {
+                curstrokes = strokes;
+                retour.push_str(
+                    format!("<span class='candlist'>{} strokes :</span>", curstrokes).as_str(),
+                );
+            }
+            retour.push_str("<button class='zilistbutton' onclick='add(\"");
+            retour.push(zi.hanzi);
+            retour.push_str("\")'>");
+            retour.push(zi.hanzi);
+            retour.push_str("</button>");
+        }
+        retour
+    }
+}
+
+pub fn zilist(zi: char) -> Vec<Zi> {
+    // let zi = carac.chars().next().unwrap();
+    let mut vec = Vec::<Zi>::new();
+    let n = data::ZIDIAN.len();
+    let mut i = 0;
+    while i < n {
+        let dbzi = &data::ZIDIAN[i];
+        let zicode: u32 = u32::from_str_radix(dbzi.unicode, 16).unwrap();
+        let hanzi = char::from_u32(zicode).unwrap();
+        if hanzi == zi {
+            let zi = Zi {
+                pinyin_ton: dbzi.pinyin_ton,
+                unicode: dbzi.unicode,
+                hanzi: zi,
+                sens: dbzi.sens,
+                strokes: dbzi.strokes,
+            };
+            vec.push(zi);
+        }
+        i += 1;
+    }
+    vec.sort();
+    vec
+}

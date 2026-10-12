@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chinese text writer</title>
+  <link rel="icon" type="image/png" href="./assets/favicon.png" />
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+        <p><span class="tm">WAZI&trade;</span> hanzi writer as of <span id="wasmdate"></span></p>
+        <form id="postzi" autocomplete="off" onkeydown="return event.key != 'Enter';">
+            <label for="pinyin">Enter pinyin+tone (press space after pinyin if tone unknown; to get ü type @) :</label>
+            <br>
+			<input type='text' id='pinyin' name='pinyin_ton' pattern="^[a-z,ü]+[0-4]?" size="10" autofocus oninput='convertToZi()'>
+            <button id="subpy" style="display:none" type="submit"></button>
+        </form>
+        <p id="resultat"><b>Result hanzi text :</b><br><input type='text' id='zistring' size='40'></p>
+        <button class = "Addzi" onclick='copyTextToClipboard()' >Copy to clipboard</button>
+        <button class = "Addzi" onclick='reset()' >Reset</button>
+        <button class = "Addzi" id="getzi" >Last zi data</button>
+        <button class = "Addzi" onclick="lookup(document.getElementById('zistring').value)" >Google Translate</button>
+        <button class = "Addzi" onclick="lookupWrittenChinese(document.getElementById('zistring').value)" >Lookup Hanzii</button>
+        <div id="zilist"></div>
+  <script src="./js/chwriter.js"></script>
+  <script type="module" src="./js/index.js"></script>
+</body>
+</html>
