@@ -22,7 +22,7 @@ pub fn printcandidatelist(chain: &str) {
 pub fn printzidata(zistring: String) {
     let mut resp: String = "".to_owned();
     if zistring.len() == 0 {
-        resp.push_str("<br /><br />No hanzi shown");
+        resp.push_str("<p>No hanzi in Result</p>");
     } else {
         let carac = zistring.chars().last().unwrap();
         resp.push_str(format!("<p>Data for character {} :</p>", carac).as_str());
