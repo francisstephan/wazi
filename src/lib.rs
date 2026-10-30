@@ -65,3 +65,16 @@ pub fn printzi() -> Result<(), JsValue> {
     writers::printzidata(zistring);
     Ok(())
 }
+
+#[wasm_bindgen]
+pub fn zoomtext() -> Result<(), JsValue> {
+    let document = window().unwrap().document().unwrap();
+    let input = document
+        .get_element_by_id("zistring")
+        .unwrap()
+        .dyn_into::<HtmlInputElement>()
+        .unwrap();
+    let zistring = input.value();
+    writers::printzoom(zistring);
+    Ok(())
+}

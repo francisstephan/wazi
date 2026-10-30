@@ -1,4 +1,4 @@
-import init, { connectwhzform, showdate, printzi } from "../pkg/wazi.js";
+import init, { connectwhzform, showdate, printzi, zoomtext } from "../pkg/wazi.js";
 
 async function run() {
   const wasm = await init();
@@ -8,11 +8,19 @@ async function run() {
   document
     .getElementById("getzi")
     .addEventListener("click", (ev) => printcar());
+  document
+    .getElementById("zoom")
+    .addEventListener("click", (ev) => printzoom());
 }
 
 run();
 
 function printcar() {
   printzi();
+  document.getElementById("pinyin").focus();
+}
+
+function printzoom() {
+  zoomtext();
   document.getElementById("pinyin").focus();
 }

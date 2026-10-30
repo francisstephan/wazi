@@ -47,3 +47,19 @@ pub fn printzidata(zistring: String) {
         .unwrap();
     cont.set_inner_html(&resp);
 }
+
+pub fn printzoom(zistring: String) {
+    let mut resp: String = "".to_owned();
+    if zistring.len() == 0 {
+        resp.push_str("<p>No hanzi in Result</p>");
+    } else {
+        resp.push_str(format!("<p style='font-size:40px;'>{}</p>", zistring).as_str());
+    }
+    let cont = window()
+        .unwrap()
+        .document()
+        .unwrap()
+        .get_element_by_id("zilist")
+        .unwrap();
+    cont.set_inner_html(&resp);
+}
